@@ -1,0 +1,2 @@
+-i --trusted-host http://pypi.doubanio.com/simple/
+Django~=1.11.20
