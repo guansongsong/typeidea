@@ -31,6 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'xadmin',
+    'crispy_forms',
+    'typeidea',
     'blog',
     'config',
     'comment',
@@ -44,6 +47,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'blog.middleware.user_id.UserIDMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -55,10 +60,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'typeidea.urls'
 
+THEME = 'bootstrap'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'themes', THEME, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -109,8 +116,18 @@ USE_L10N = True
 
 USE_TZ = True
 
+#
+XADMIN_TITLE = 'Typeidea 管理后台'
+XADMIN_FOOTER_TITLE = 'power by gss.com'
+#
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+STATIC_ROOT = 'tmp/static'
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'themes', THEME, 'static')
+]
+
