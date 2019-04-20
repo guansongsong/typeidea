@@ -31,12 +31,22 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'blog',
+    'comment',
+    'config',
+
+    'dal',
+    'dal_select2',
+
+    'ckeditor',
+    'ckeditor_uploader',
+
     'xadmin',
     'crispy_forms',
+
     'typeidea',
-    'blog',
-    'config',
-    'comment',
+
+
     
     'django.contrib.admin',
     'django.contrib.auth',
@@ -121,6 +131,19 @@ XADMIN_TITLE = 'Typeidea 管理后台'
 XADMIN_FOOTER_TITLE = 'power by gss.com'
 #
 
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',  # 全部功能都显示出来
+        'height': 300,
+        'weight': 800,
+        'extraPlugins': 'codesnippet'  # 可以插入代码的插件
+    },
+}
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+CKEDITOR_UPLOAD_PATH = 'article_images'
+
+DEFAULT_FILE_STORAGE = 'typeidea.storage.WatermarkStorage'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/

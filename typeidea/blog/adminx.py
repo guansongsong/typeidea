@@ -80,7 +80,7 @@ class PostAdmin(BaseOwnerAdmin):
     )
     list_display_links = []
     # list_filter = [CategoryOwnerFilter, ]
-    list_filter = ['category']
+    list_filter = ['title']
     search_fields = ['title', 'category__name']
     filter_horizontal = ('tag',)
 
@@ -95,6 +95,9 @@ class PostAdmin(BaseOwnerAdmin):
         Fieldset(
             '内容信息',
             'desc',
+            'is_md',
+            'content_ck',
+            'content_md',
             'content'
         )
     )

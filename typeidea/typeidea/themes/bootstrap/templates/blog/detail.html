@@ -20,7 +20,7 @@
                  <span>分类：{{ post.category.name }}</span>
                  <span>作者：{{ post.owner.username }}</span>
                 <hr>
-                <p class="card-text">内容:{{ post.content_html | safe }}</p>
+                <p class="card-text">内容: {% autoescape off %}{{ post.content_html }}{% endautoescape %}</p>
             </div>
         </div>
     {% endif %}
