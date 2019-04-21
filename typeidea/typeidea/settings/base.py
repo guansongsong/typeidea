@@ -46,7 +46,8 @@ INSTALLED_APPS = [
 
     'typeidea',
 
-
+    'rest_framework',
+    'rest_framework_swagger',
     
     'django.contrib.admin',
     'django.contrib.auth',
@@ -57,6 +58,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # 'utils.swagger_middleware.RecordUrlMiddleware',
     'blog.middleware.user_id.UserIDMiddleware',
 
     'django.middleware.security.SecurityMiddleware',
@@ -144,6 +146,28 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 CKEDITOR_UPLOAD_PATH = 'article_images'
 
 DEFAULT_FILE_STORAGE = 'typeidea.storage.WatermarkStorage'
+
+
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 3,
+}
+
+
+
+
+
+
+
+
+
+
+
+# LOGIN_URL = '/users/login/'
+# LOGOUT_URL = '/users/logout/'
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
