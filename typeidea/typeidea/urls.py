@@ -32,6 +32,19 @@ from django.conf import settings
 from django.conf.urls import url, include
 from django.conf.urls.static import static
 
+from blog.apis import PostViewSet, CategoryViewSet
+from rest_framework.routers import DefaultRouter
+
+from rest_framework.documentation import include_docs_urls
+from rest_framework_swagger.views import get_swagger_view
+
+
+
+router = DefaultRouter()
+router.register(r'post', PostViewSet, base_name='api-post')
+router.register(r'category', CategoryViewSet, base_name='api-category')
+
+
 
 urlpatterns = [
     url(r'^rss/$', LatestPostFeed(), name='rss'),
@@ -54,4 +67,12 @@ urlpatterns = [
 
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+    url(r'^api/', include(router.urls,)),
+
+
+    url(r'api/docs/', include_docs_urls(title='typeidea apis')),     # drf自带的接口文档
+    url(r"^docs/$", get_swagger_view(title="tyepidea apis")),        # swagger接口文档
+
+ ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
