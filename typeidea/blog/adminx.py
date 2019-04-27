@@ -34,7 +34,7 @@ class CategoryAdmin(BaseOwnerAdmin):
 
     post_count.short_description = '文章数量'
 
-    inlines = (PostInline,)
+    # inlines = (PostInline,)
 
 
 @xadmin.sites.register(models.Tag)

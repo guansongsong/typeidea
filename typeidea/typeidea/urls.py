@@ -49,6 +49,7 @@ router.register(r'category', CategoryViewSet, base_name='api-category')
 urlpatterns = [
     url(r'^rss/$', LatestPostFeed(), name='rss'),
     url(r'^sitemap.xml$', sitemap_views.sitemap, {'sitemaps': {'posts': PostSitemap}}),
+
     url(r'^comment/$', CommentView.as_view(), name='comment'),
     url(r'^links/$', LinkListView.as_view(), name='links'),
     url(r'^author/(?P<owner_id>\d+)$', AuthorView.as_view(), name='author'),
@@ -76,3 +77,9 @@ urlpatterns = [
 
  ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        url(r'__debug__/', include(debug_toolbar.urls)),
+        # url(r'^silk/', include('silk.urls', namespace='silk')),
+        ] + urlpatterns

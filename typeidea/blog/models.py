@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 import mistune
 from django.utils.functional import cached_property
+
+# from silk.profiling.profiler import silk_profile
 # Create your models here.
 
 
@@ -22,6 +24,7 @@ class Category(models.Model):
         verbose_name = verbose_name_plural = '分类'
 
     @classmethod
+    # @silk_profile(name='get_navs')
     def get_navs(cls):
         categories = cls.objects.filter(status=cls.STATUS_NORMAL)
         nav_categories = []
@@ -88,7 +91,13 @@ class Post(models.Model):
 
     @classmethod
     def hot_posts(cls):
-        return cls.objects.filter(status=cls.STATUS_NORMAL).order_by('-pv')
+        from django.core.cache import cache
+        result = cache.get('hot_posts')
+        if not result:
+            result = cls.objects.filter(status=cls.STATUS_NORMAL).order_by('-pv')
+            cache.set('hot_posts', result, 10 * 60)
+        return result
+        # return cls.objects.filter(status=cls.STATUS_NORMAL).order_by('-pv')
 
     @staticmethod
     def get_by_tag(tag_id):
@@ -115,8 +124,11 @@ class Post(models.Model):
         return post_list, category
 
     @classmethod
-    def latest_posts(cls):
-        return cls.objects.filter(status=cls.STATUS_NORMAL)
+    def latest_posts(cls, with_related=True):
+        queryset = cls.objects.filter(status=cls.STATUS_NORMAL)
+        if with_related:
+            queryset = queryset.select_related('owner', 'category').prefetch_related('tag')
+        return queryset
 
     def save(self, *args, **kwargs):
         if self.is_md:

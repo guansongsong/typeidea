@@ -52,6 +52,8 @@
                 {% endblock %}
             </div>
             <div class="col-3">
+            {% load cache %}
+            {% cache  50 sidebar %}
                 {% block sidebar %}
                     {% for sidebar in sidebars %}
                         <div class="card sidebar">
@@ -63,6 +65,7 @@
                         </div>
                     {% endfor %}
                 {% endblock %}
+             {% endcache %}
             </div>
         </div>
     </div>
